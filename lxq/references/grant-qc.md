@@ -13,6 +13,8 @@
 
 Treat the current official funding call, sponsor instructions, application template, review criteria, page/word limits, eligibility rules, required attachments, and deadline/time zone as the governing specification. Record the exact scheme, year/cycle, applicant role, institution, project duration, requested amount, language, and intended review panel.
 
+For a formal NSFC/国自然 Word application, read `references/nsfc-2026-formal-application-format-zh.md` and fill a copy of `assets/templates/nsfc-2026-formal-application-template.docx`. The bundled file is an institutional delivery template, not permanent proof of current NSFC policy. Preserve its required headings and form pages unless the verified current official system requires another structure.
+
 Do not infer current eligibility, indirect-cost policy, page limits, submission fields, or deadlines from memory. Mark unresolved current requirements `[POLICY_CHECK_NEEDED: ...]` and verify official pages before final submission advice.
 
 Build a compliance matrix:
@@ -88,3 +90,5 @@ For Chinese grant prose, apply `static/fragments/style/anti_ai_zh.md` before del
 When the requested output is a client-ready scheme, pre-sales document, or directly readable proposal, load `references/medical-research-delivery-zh.md` for Chinese output or `references/medical-research-delivery.md` for English output. Deliver the scheme in its customer-facing structure while retaining the funding-requirement, aim/work-plan, and study-design matrices as the auditable basis.
 
 Do not let polished prose conceal missing sample-size justification, endpoints, inclusion/exclusion criteria, wet-lab controls, bioinformatics validation, budget mismatch, or unresolved client facts. Run `scripts/validate_grant_delivery.py` before assigning `ready_to_use`.
+
+For formal NSFC DOCX output, additionally run `scripts/validate_nsfc_template.py <docx>` and complete a Word/PDF page render review. Structural validation does not replace scientific, policy, or applicant-fact review.

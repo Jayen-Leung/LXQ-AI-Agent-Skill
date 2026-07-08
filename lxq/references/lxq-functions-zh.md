@@ -27,7 +27,7 @@
 13. 跨材料整合能力
 14. 外部专业能力路由
 15. 结构化交付包
-16. 十个执行、评分与验证脚本
+16. 十一个执行、评分与验证脚本
 17. 决策、严重程度和占位符
 18. 安全、隐私和科研诚信边界
 19. 当前局限
@@ -300,6 +300,7 @@ LXQ 使用分层、按需加载结构：
 - 根据≤3万、3–5万、5–10万和>10万元区间约束技术复杂度；
 - 使用 `anti_ai_zh.md` 删除空泛模板表达，但保留证据边界；
 - 通过 `validate_grant_delivery.py` 检查章节和研究设计字段完整性，并使用 `score_delivery_quality.py` 进行回归初筛。
+- 正式 NSFC/国自然 Word 标书必须使用 `assets/templates/nsfc-2026-formal-application-template.docx` 的副本，遵循五页格式，并通过 `validate_nsfc_template.py` 和逐页渲染检查。
 
 官方基金模板与默认客户结构冲突时，以官方模板为准，但内部结构化研究设计信息仍需保留。
 
@@ -389,7 +390,7 @@ LXQ 建立事实和质量边界后，可调用：
 - `qc-report.md`：人类可读 QC 报告；
 - 专项表格：回复、可用性、基金、研究设计、文献证据和全文文件清单。
 
-## 十六、十个执行、评分与验证脚本
+## 十六、十一个执行、评分与验证脚本
 
 ### 1. `build_manifest.py`
 
@@ -415,19 +416,23 @@ LXQ 建立事实和质量边界后，可调用：
 
 验证基金研究设计表和客户方案；支持中文/英文标题模式、空模板结构检查和草稿待确认项；严格模式要求研究设计关键字段非空、章节顺序正确且包含实质内容。它检查完整性，不替代科学、统计或专家审核。
 
-### 7. `score_delivery_quality.py`
+### 7. `validate_nsfc_template.py`
+
+验证正式 NSFC DOCX 的五页章节顺序、必需提纲、表格数量、A4 页面设置、精确页边距和页码域；它不替代当年度政策、科学内容或申请人事实核验。
+
+### 8. `score_delivery_quality.py`
 
 对中文客户交付方案进行透明启发式评分，检查14段结构、样本量、入排标准、分组、主次终点、检测指标、统计、风险替代、AI空话、未经核验的既定事实和低预算高成本技术。
 
-### 8. `score_grant_quality.py`
+### 9. `score_grant_quality.py`
 
 检查基金意义、缺口、可测量目标、目标—内容对应、具体创新、样本量依据、统计匹配、预算技术匹配和风险替代。
 
-### 9. `generate_eval_cases.py`
+### 10. `generate_eval_cases.py`
 
 确定性生成30个评测用例，每例包含输入、预期行为和评分rubric；默认拒绝覆盖已有用例。
 
-### 10. `validate_eval_cases.py`
+### 11. `validate_eval_cases.py`
 
 验证30个三件套是否齐全、类别数量、调用强度、rubric字段、评分维度、权重总和和通过阈值。
 
@@ -572,6 +577,9 @@ LXQ 建立事实和质量边界后，可调用：
 | `scripts/validate_review_bundle.py` | 验证工作包文件与表头结构 |
 | `scripts/validate_literature_files.py` | 验证文献文件、路径、类型、大小和哈希 |
 | `scripts/validate_grant_delivery.py` | 验证中英文基金客户方案和研究设计完整性 |
+| `scripts/validate_nsfc_template.py` | 验证正式 NSFC DOCX 的模板结构、页面几何和页码域 |
+| `assets/templates/nsfc-2026-formal-application-template.docx` | 正式 NSFC 标书交付母版；使用时必须复制并替换示例字段 |
+| `references/nsfc-2026-formal-application-format-zh.md` | 2026 NSFC 五页结构、版式、填充和验证规则 |
 | `scripts/score_delivery_quality.py` | 中文客户交付质量启发式评分 |
 | `scripts/score_grant_quality.py` | 中文基金方案质量启发式评分 |
 | `scripts/generate_eval_cases.py` | 生成30个eval cases |

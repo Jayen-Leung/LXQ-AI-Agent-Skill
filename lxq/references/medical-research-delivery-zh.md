@@ -283,6 +283,8 @@
 
 若官方模板与本结构冲突，以当前官方模板为准，但必须在内部研究设计表中保留样本量、入排标准、终点、统计、验证、风险和预算映射。
 
+当用户要求正式 NSFC/国自然标书、Word 正式版或“按 2026 模板交付”时，不以本 14 段结构作为最终文件。读取 `references/nsfc-2026-formal-application-format-zh.md`，将本结构映射到模板的封面、评审表、基本情况表、报告正文和申请人简历，并以 `assets/templates/nsfc-2026-formal-application-template.docx` 的副本交付。
+
 ## 十、各部分写作要求
 
 ### 一、拟定题目
