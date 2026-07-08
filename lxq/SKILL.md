@@ -87,6 +87,8 @@ For specialized production work, route after establishing the LXQ fact base:
 
 For Chinese customer-facing medical research delivery, read `references/medical-research-delivery-zh.md`. For an explicitly English deliverable, read `references/medical-research-delivery.md`. Do not load both unless comparing language versions. Produce the directly readable scheme first, then keep assumptions, missing facts, compliance items, and validation evidence visible in the accompanying registers.
 
+For a formal NSFC Word application or a request to follow the bundled 2026 template, also read `references/nsfc-2026-formal-application-format-zh.md`, fill a copy of `assets/templates/nsfc-2026-formal-application-template.docx`, and validate the result with `scripts/validate_nsfc_template.py` plus page rendering. Never overwrite the template asset or retain its example institution/date as unverified applicant facts.
+
 LXQ remains responsible for evidence linkage, numerical consistency, provenance, integrity, and readiness boundaries across routed work.
 
 When an external skill or tool is unavailable, do not claim it was invoked or completed. Provide a text-level fallback when possible, list unfinished work explicitly, and provide copyable content or a structured draft when DOCX, PDF, PPT, or figure generation is unavailable. LXQ still owns evidence boundaries, numerical consistency, research integrity, and readiness decisions.
@@ -101,6 +103,7 @@ When a durable audit is useful:
 - Run `scripts/validate_review_bundle.py` on the complete bundle.
 - Run `scripts/validate_literature_files.py` when full-text files were acquired.
 - Run `scripts/validate_grant_delivery.py` before calling a customer-facing medical research scheme complete.
+- Run `scripts/validate_nsfc_template.py` before calling a formal NSFC DOCX complete.
 - Run `scripts/score_delivery_quality.py` for a Chinese customer-delivery quality score.
 - Run `scripts/score_grant_quality.py` for a Chinese grant quality score.
 - Run `scripts/validate_eval_cases.py eval_cases` before a regression run or release.

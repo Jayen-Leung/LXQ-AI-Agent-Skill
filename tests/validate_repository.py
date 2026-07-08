@@ -24,6 +24,7 @@ EXPECTED_SCRIPTS = {
     "validate_grant_delivery.py",
     "validate_issue_register.py",
     "validate_literature_files.py",
+    "validate_nsfc_template.py",
     "validate_review_bundle.py",
 }
 
@@ -92,6 +93,7 @@ def validate_internal_inventory() -> None:
         "对应 LXQ 版本：`2.5.0`", "调用强度", "light", "standard", "strict", "forensic",
         "score_delivery_quality.py", "score_grant_quality.py", "generate_eval_cases.py",
         "validate_eval_cases.py", "examples/01-08_*.md", "eval_cases/case_001-case_030_*",
+        "validate_nsfc_template.py", "nsfc-2026-formal-application-template.docx",
     ]
     missing = [item for item in required if item not in audit]
     if missing:
@@ -105,6 +107,12 @@ def validate_profiles() -> None:
     issue_validator = scripts / "validate_issue_register.py"
     grant_validator = scripts / "validate_grant_delivery.py"
     literature_validator = scripts / "validate_literature_files.py"
+    nsfc_validator = scripts / "validate_nsfc_template.py"
+    nsfc_template = SKILL / "assets" / "templates" / "nsfc-2026-formal-application-template.docx"
+
+    if not nsfc_template.is_file():
+        fail("missing bundled NSFC formal application template")
+    run(str(nsfc_validator), str(nsfc_template))
 
     with tempfile.TemporaryDirectory(prefix="lxq-repository-test-") as tmp:
         base = Path(tmp)

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added a reusable 2026 NSFC formal-application DOCX template asset.
+- Added the Chinese NSFC five-page delivery contract, exact layout rules, and formal-grant routing.
+- Added `validate_nsfc_template.py` for dependency-free DOCX structure and page-layout validation.
+
 ## v2.5.0
 
 ### Added

@@ -86,7 +86,8 @@ python tests/validate_repository.py
 
 - Skill 基本结构和前置元数据
 - 路由引用路径存在性
-- 十个 Python 脚本语法和命令入口
+- 十一个 Python 脚本语法和命令入口
+- 2026 NSFC 正式申报书 DOCX 模板、五页格式契约和结构验证入口
 - UTF-8 文件完整性
 - `core`、`grant`、`literature` 和 `complete` 工作包生成与结构验证
 - 中文基金客户交付模板和空文献清单验证
