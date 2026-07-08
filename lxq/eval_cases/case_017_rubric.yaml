@@ -1,0 +1,22 @@
+task_type: 生信方案
+invocation_intensity: standard
+required_sections:
+  - 样本身份
+  - 质控
+  - 整合
+  - 差异分析
+must_include:
+  - 供体级推断
+  - 双细胞
+must_not_include:
+  - 细胞作为独立重复
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

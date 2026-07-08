@@ -1,0 +1,21 @@
+task_type: 投稿返修
+invocation_intensity: strict
+required_sections:
+  - 一致性矩阵
+  - 问题分级
+  - 修复与验证
+must_include:
+  - 样本数
+  - 效应方向
+must_not_include:
+  - 只润色文字
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

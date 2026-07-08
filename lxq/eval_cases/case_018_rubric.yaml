@@ -1,0 +1,23 @@
+task_type: 生信方案
+invocation_intensity: standard
+required_sections:
+  - 参考版本
+  - 变异检测
+  - 过滤
+  - 注释
+must_include:
+  - 覆盖
+  - REF核验
+  - 专家复核
+must_not_include:
+  - 确定性临床结论
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

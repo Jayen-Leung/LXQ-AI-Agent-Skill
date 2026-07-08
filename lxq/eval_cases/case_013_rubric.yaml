@@ -1,0 +1,23 @@
+task_type: 客户交付完整方案
+invocation_intensity: standard
+required_sections:
+  - 主要研究内容
+  - 统计学与模型构建
+  - 创新点
+must_include:
+  - 具体对象
+  - 指标
+  - 方法
+must_not_include:
+  - 多维度
+  - 重要理论意义
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

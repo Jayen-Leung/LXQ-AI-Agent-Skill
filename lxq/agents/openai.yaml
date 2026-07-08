@@ -1,0 +1,7 @@
+interface:
+  display_name: "LXQ Skill"
+  short_description: "Graded medical research delivery, grants, literature, and QC"
+  default_prompt: "Use $lxq at the appropriate light, standard, strict, or forensic intensity to build or audit my medical research delivery, grant, literature review, analysis, or submission."
+
+policy:
+  allow_implicit_invocation: true

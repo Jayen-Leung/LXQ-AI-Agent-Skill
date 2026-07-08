@@ -1,0 +1,22 @@
+task_type: 客户交付完整方案
+invocation_intensity: standard
+required_sections:
+  - 研究背景与临床问题
+  - 研究目标
+  - 技术路线
+  - 预期成果
+must_include:
+  - 入排标准
+  - 主次终点
+must_not_include:
+  - 虚构伦理编号
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

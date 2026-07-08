@@ -1,0 +1,22 @@
+task_type: 文献精读
+invocation_intensity: strict
+required_sections:
+  - 研究问题
+  - 图表证据
+  - 局限
+  - 结论边界
+must_include:
+  - 实验单位
+  - 效应量
+must_not_include:
+  - 把相关写成机制
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

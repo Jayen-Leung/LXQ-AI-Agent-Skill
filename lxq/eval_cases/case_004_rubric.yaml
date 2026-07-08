@@ -1,0 +1,20 @@
+task_type: 基金售前方向筛选
+invocation_intensity: light
+required_sections:
+  - 候选方向
+  - 推荐顺序
+must_include:
+  - 终点
+  - 验证
+must_not_include:
+  - 保证发表
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

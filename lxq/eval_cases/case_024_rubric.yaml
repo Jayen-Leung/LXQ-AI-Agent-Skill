@@ -1,0 +1,22 @@
+task_type: 湿实验方案
+invocation_intensity: standard
+required_sections:
+  - 研究对象
+  - 分组
+  - 伦理边界
+  - 替代方案
+must_include:
+  - 需进一步确认
+  - 样本量依据
+must_not_include:
+  - 虚构伦理批准
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

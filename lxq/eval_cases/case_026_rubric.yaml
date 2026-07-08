@@ -1,0 +1,24 @@
+task_type: 文献精读
+invocation_intensity: strict
+required_sections:
+  - 论文身份
+  - 设计
+  - 结果
+  - 偏倚
+  - 支持等级
+must_include:
+  - 校准
+  - 外部验证
+  - 来源锚点
+must_not_include:
+  - 只看摘要
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

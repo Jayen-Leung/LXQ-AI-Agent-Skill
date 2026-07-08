@@ -1,0 +1,23 @@
+task_type: 湿实验方案
+invocation_intensity: standard
+required_sections:
+  - 样本来源
+  - 处理
+  - 结局
+  - QC
+must_include:
+  - 批次
+  - 正交验证
+  - 预算风险
+must_not_include:
+  - 保证药物有效
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

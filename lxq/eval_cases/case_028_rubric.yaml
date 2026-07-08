@@ -1,0 +1,22 @@
+task_type: 文献精读
+invocation_intensity: strict
+required_sections:
+  - 证据矩阵
+  - 异质性
+  - 矛盾解释
+must_include:
+  - 人群
+  - 终点
+  - 不确定性
+must_not_include:
+  - 强行得出共识
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80
