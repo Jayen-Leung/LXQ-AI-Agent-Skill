@@ -18,17 +18,21 @@ REQUIRED_SECTIONS = [
 AI_PHRASES = [
     "多维度", "多层次", "系统阐明", "具有重要理论意义和实践价值",
     "为临床诊疗提供新思路", "为后续研究奠定基础", "有望推动",
-    "进一步丰富", "提供理论依据",
+    "进一步丰富", "提供理论依据", "填补国内外空白", "具有广阔应用前景",
 ]
 HIGH_COST_METHODS = [
     "单细胞测序", "单细胞组学", "空间转录组", "空间组学",
     "大规模代谢组", "大规模蛋白组", "多中心前瞻性大队列",
     "完整动物机制验证", "类器官大规模筛选", "多组学整合",
+    "scRNA-seq", "single-cell", "Visium", "WES", "WGS", "全外显子",
+    "全基因组", "空间蛋白组", "大规模质谱",
 ]
 UNCERTAIN_AS_FACT = [
-    r"前期(?:研究)?已证实", r"已建立(?:稳定的)?\d+例", r"伦理(?:批准|批件|编号)(?:为|是|：)",
-    r"已经明确(?:证实|证明)", r"必然(?:改善|提高|降低)",
+    r"前期(?:研究)?已证实", r"已(?:收集|纳入|建立)(?:稳定的)?\d+例", r"伦理(?:已)?(?:批准|批件|编号)(?:为|是|：)?",
+    r"已经明确(?:证实|证明)", r"已证实(?:机制|通路|作用)", r"必然(?:改善|提高|降低)",
+    r"保证(?:中标|发表|接收|有效)", r"确保(?:中标|发表|接收|有效)",
 ]
+UNCERTAINTY_MARKERS = ["拟", "建议", "需进一步确认", "待确认", "AUTHOR_INPUT_NEEDED", "EVIDENCE_NEEDED"]
 
 
 def parse_args() -> argparse.Namespace:
@@ -64,6 +68,25 @@ def has_any(text: str, terms: list[str]) -> bool:
     return any(term in text for term in terms)
 
 
+def has_numbered_sample_size(text: str) -> bool:
+    if re.search(r"(?:样本量|病例数|受试者|患者)[^\n。；;]{0,30}(?:\d+\s*(?:例|名|人)|n\s*[=＝]\s*\d+)", text, re.I):
+        return True
+    if re.search(r"(?:\d+\s*(?:例|名|人)|n\s*[=＝]\s*\d+)[^\n。；;]{0,30}(?:患者|受试者|样本|病例)", text, re.I):
+        return True
+    return has_any(text, ["样本量估算", "样本量计算", "样本量需进一步确认", "AUTHOR_INPUT_NEEDED: 样本量"])
+
+
+def find_unverified_fact_flags(text: str) -> list[str]:
+    flags: list[str] = []
+    for pattern in UNCERTAIN_AS_FACT:
+        for match in re.finditer(pattern, text):
+            window = text[max(0, match.start() - 30): match.end() + 30]
+            if not has_any(window, UNCERTAINTY_MARKERS):
+                flags.append(pattern)
+                break
+    return flags
+
+
 def main() -> int:
     args = parse_args()
     if not args.document.is_file():
@@ -74,7 +97,7 @@ def main() -> int:
 
     missing_sections = [section for section in REQUIRED_SECTIONS if section not in text]
     field_checks = {
-        "sample_size": has_any(text, ["样本量", "例患者", "例受试者", "n="]),
+        "sample_size": has_numbered_sample_size(text),
         "inclusion_criteria": has_any(text, ["纳入标准", "入组标准", "入选标准"]),
         "exclusion_criteria": has_any(text, ["排除标准", "排除条件"]),
         "grouping": has_any(text, ["分组", "对照组", "观察组", "训练集"]),
@@ -87,8 +110,15 @@ def main() -> int:
     }
     missing_fields = [name for name, passed in field_checks.items() if not passed]
     ai_style_flags = [phrase for phrase in AI_PHRASES if phrase in text]
-    uncertainty_flags = [pattern for pattern in UNCERTAIN_AS_FACT if re.search(pattern, text)]
+    uncertainty_flags = find_unverified_fact_flags(text)
     budget_method_warnings = find_budget_warnings(text, budget)
+    hard_flags = []
+    if uncertainty_flags:
+        hard_flags.append("unverified_fact_as_established")
+    if budget_method_warnings:
+        hard_flags.append("low_budget_high_cost_methods")
+    if not field_checks["sample_size"]:
+        hard_flags.append("sample_size_missing_or_unbounded")
 
     score = 100
     score -= min(42, 3 * len(missing_sections))
@@ -96,6 +126,7 @@ def main() -> int:
     score -= min(12, 2 * len(ai_style_flags))
     score -= min(20, 10 * len(uncertainty_flags))
     score -= min(24, 12 * len(budget_method_warnings))
+    score -= min(18, 6 * len(hard_flags))
     score = max(0, score)
 
     major_issues: list[str] = []
@@ -122,6 +153,9 @@ def main() -> int:
         decision = "conditional_pass"
     else:
         decision = "fail"
+    readiness = "ready_to_use" if decision == "pass" else "conditional"
+    if hard_flags:
+        readiness = "blocked" if decision == "fail" else "needs_author_input"
 
     recommendations = [f"补充章节：{name}" for name in missing_sections]
     recommendations += [f"补充字段：{name}" for name in missing_fields]
@@ -143,6 +177,8 @@ def main() -> int:
         "ai_style_flags": ai_style_flags,
         "uncertainty_as_fact_flags": uncertainty_flags,
         "budget_method_warnings": budget_method_warnings,
+        "hard_flags": hard_flags,
+        "readiness": readiness,
         "recommendations": recommendations,
     }
     print(json.dumps(payload, ensure_ascii=False, indent=2))

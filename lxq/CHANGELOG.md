@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## v2.5.1
+
+### Added
+
+- Three red-team regression cases for low-budget high-cost omics, unverified applicant facts, and fake DOI/literature evidence.
+- Hard-flag outputs in grant and customer-delivery scoring scripts.
+
+### Changed
+
+- Eval scaffold now contains 33 cases instead of 30.
+- Delivery and grant quality scorers now require bounded sample-size evidence rather than accepting the word "样本量" alone.
+- Budget mismatch detection now covers single-cell, spatial omics, WES/WGS, full exome/genome, and other high-cost methods.
+- Scoring payloads now include `readiness` for internal review.
+
 ### Added
 
 - Reusable 2026 NSFC formal-application DOCX template asset.

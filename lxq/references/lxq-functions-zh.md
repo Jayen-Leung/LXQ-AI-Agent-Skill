@@ -2,7 +2,7 @@
 
 ## 文档信息
 
-- 对应 LXQ 版本：`2.5.0`
+- 对应 LXQ 版本：`2.7.0`
 - 审核语言：中文
 - 覆盖范围：路由、任务模式、全部功能轨道、输出结构、验证脚本、安全边界和文件清单
 - 用途：内部能力审核、版本评审、使用边界确认和后续改进规划
@@ -64,7 +64,7 @@ LXQ 使用分层、按需加载结构：
 6. `static/fragments/style/`：中文正式交付语言后处理规则。
 7. `references/`：业务轨道、输出契约和回归报告模板。
 8. `examples/`：优秀输出和坏例子。
-9. `eval_cases/`：30个三件套回归用例。
+9. `eval_cases/`：33个三件套回归用例。
 10. `scripts/`：结构化工作包生成、评分和确定性验证。
 11. `agents/openai.yaml`：Codex 界面显示信息和默认调用提示。
 
@@ -430,11 +430,11 @@ LXQ 建立事实和质量边界后，可调用：
 
 ### 10. `generate_eval_cases.py`
 
-确定性生成30个评测用例，每例包含输入、预期行为和评分rubric；默认拒绝覆盖已有用例。
+确定性生成33个评测用例，每例包含输入、预期行为和评分rubric；默认拒绝覆盖已有用例。
 
 ### 11. `validate_eval_cases.py`
 
-验证30个三件套是否齐全、类别数量、调用强度、rubric字段、评分维度、权重总和和通过阈值。
+验证33个三件套是否齐全、类别数量、调用强度、rubric字段、评分维度、权重总和和通过阈值。
 
 脚本常用退出码：`0` 表示验证通过，`2` 表示结构/内容错误；问题清单验证器在达到 `--fail-on` 阈值时返回 `3`。
 
@@ -570,7 +570,7 @@ LXQ 建立事实和质量边界后，可调用：
 | `references/output_contracts/*.md` | 八类任务专用输出契约 |
 | `examples/01-08_*.md` | 八个优秀行为示例 |
 | `examples/09-12_*.md` | 四个坏例子及修复说明 |
-| `eval_cases/case_001-case_030_*` | 30个输入/预期/rubric回归用例三件套 |
+| `eval_cases/case_001-case_033_*` | 33个输入/预期/rubric回归用例三件套 |
 | `scripts/build_manifest.py` | 生成文件清单和可选 SHA-256 |
 | `scripts/scaffold_review.py` | 生成七类 LXQ 工作包 |
 | `scripts/validate_issue_register.py` | 验证问题登记表和严重度失败阈值 |
@@ -582,7 +582,7 @@ LXQ 建立事实和质量边界后，可调用：
 | `references/nsfc-2026-formal-application-format-zh.md` | 2026 NSFC 五页结构、版式、填充和验证规则 |
 | `scripts/score_delivery_quality.py` | 中文客户交付质量启发式评分 |
 | `scripts/score_grant_quality.py` | 中文基金方案质量启发式评分 |
-| `scripts/generate_eval_cases.py` | 生成30个eval cases |
+| `scripts/generate_eval_cases.py` | 生成33个eval cases |
 | `scripts/validate_eval_cases.py` | 验证eval三件套和rubric结构 |
 | `CHANGELOG.md` | 版本新增、变更和保留项 |
 

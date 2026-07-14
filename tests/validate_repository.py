@@ -27,6 +27,15 @@ EXPECTED_SCRIPTS = {
     "validate_nsfc_template.py",
     "validate_review_bundle.py",
 }
+EXPECTED_SPECIALISTS = {
+    "nature-writing", "nature-polishing", "nature-figure", "nature-response",
+    "nature-citation", "nature-academic-search", "nature-reader", "nature-data",
+    "nature-reviewer",
+}
+EXPECTED_CATALOGS = {
+    "gptomics-bioskills": 562,
+    "orchestra-ai-research-skills": 98,
+}
 
 
 def fail(message: str) -> None:
@@ -87,12 +96,57 @@ def validate_text_and_scripts() -> None:
         run(str(path), "--help")
 
 
+def validate_specialist_skills() -> None:
+    manifest = (SKILL / "manifest.yaml").read_text(encoding="utf-8")
+    routing = (SKILL / "references" / "specialist-skill-routing.md").read_text(encoding="utf-8")
+    bundled_root = SKILL / "bundled_skills"
+    found = {path.name for path in bundled_root.iterdir() if path.is_dir()}
+    if found != EXPECTED_SPECIALISTS:
+        fail(f"unexpected bundled specialist set: {sorted(found)}")
+    for name in sorted(EXPECTED_SPECIALISTS):
+        entrypoint = bundled_root / name / "SKILL.md"
+        if not entrypoint.is_file():
+            fail(f"missing bundled specialist entrypoint: {name}/SKILL.md")
+        text = entrypoint.read_text(encoding="utf-8")
+        if not re.search(rf"(?m)^name:\s*{re.escape(name)}\s*$", text):
+            fail(f"bundled specialist name mismatch: {name}")
+        declared = f"{name}: bundled_skills/{name}/SKILL.md"
+        if declared not in manifest:
+            fail(f"manifest lacks specialist fallback: {name}")
+        if f"`{name}`" not in routing:
+            fail(f"routing reference lacks specialist: {name}")
+
+
+def validate_external_catalogs() -> None:
+    manifest = (SKILL / "manifest.yaml").read_text(encoding="utf-8")
+    routing = (SKILL / "references" / "external-catalog-routing.md").read_text(encoding="utf-8")
+    provenance = (SKILL / "bundled_catalogs" / "SOURCES.md").read_text(encoding="utf-8")
+    root = SKILL / "bundled_catalogs"
+    found = {path.name for path in root.iterdir() if path.is_dir()}
+    if found != set(EXPECTED_CATALOGS):
+        fail(f"unexpected bundled catalog set: {sorted(found)}")
+    for name, expected_count in EXPECTED_CATALOGS.items():
+        catalog = root / name
+        skill_files = list(catalog.rglob("SKILL.md"))
+        if len(skill_files) != expected_count:
+            fail(f"catalog {name} expected {expected_count} skills, found {len(skill_files)}")
+        license_file = catalog / "LICENSE"
+        if not license_file.is_file() or "MIT License" not in license_file.read_text(encoding="utf-8"):
+            fail(f"catalog {name} lacks preserved MIT license")
+        if f"root: bundled_catalogs/{name}" not in manifest:
+            fail(f"manifest lacks catalog root: {name}")
+        if f"`bundled_catalogs/{name}/`" not in routing:
+            fail(f"routing reference lacks catalog: {name}")
+        if f"`{name}`" not in provenance:
+            fail(f"provenance lacks catalog: {name}")
+
+
 def validate_internal_inventory() -> None:
     audit = (SKILL / "references" / "lxq-functions-v2.5-zh.md").read_text(encoding="utf-8")
     required = [
-        "对应 LXQ 版本：`2.5.0`", "调用强度", "light", "standard", "strict", "forensic",
+        "对应 LXQ 版本：`2.7.0`", "调用强度", "light", "standard", "strict", "forensic",
         "score_delivery_quality.py", "score_grant_quality.py", "generate_eval_cases.py",
-        "validate_eval_cases.py", "examples/01-08_*.md", "eval_cases/case_001-case_030_*",
+        "validate_eval_cases.py", "examples/01-08_*.md", "eval_cases/case_001-case_033_*",
         "validate_nsfc_template.py", "nsfc-2026-formal-application-template.docx",
     ]
     missing = [item for item in required if item not in audit]
@@ -134,8 +188,8 @@ def validate_eval_and_scores() -> None:
     contracts = list((SKILL / "references" / "output_contracts").glob("*.md"))
     if len(examples) != 12:
         fail(f"expected 12 examples, found {len(examples)}")
-    if len(eval_files) != 90:
-        fail(f"expected 90 eval files, found {len(eval_files)}")
+    if len(eval_files) != 99:
+        fail(f"expected 99 eval files, found {len(eval_files)}")
     if len(contracts) != 8:
         fail(f"expected 8 output contracts, found {len(contracts)}")
     run(str(scripts / "validate_eval_cases.py"), str(SKILL / "eval_cases"))
@@ -164,15 +218,15 @@ def validate_eval_and_scores() -> None:
 """
     bad_delivery = "预算3万元，多维度系统阐明机制，开展单细胞测序和空间组学，前期研究已证实有效。"
     good_grant = """# 研究背景与立项依据
-目前临床困难在于风险识别不足，现有研究缺乏外部校准。
+目前临床患者管理困难在于风险识别不足，现有研究缺乏外部校准。
 # 研究目标
 评估指标并验证模型校准度。
-# 主要研究内容
+# 研究内容
 目标一对应队列构建；目标二对应验证。
 # 创新点
-在明确人群和时间点中加入校准验证。
+在明确临床人群、时间点、评价指标、统计方法和数据验证路径中加入校准验证。
 # 样本量
-样本量依据事件率、精度和失访计算。
+样本量120例，依据事件率、精度和失访计算。
 # 统计方法
 采用回归模型并报告置信区间。
 # 经费
@@ -230,6 +284,8 @@ def main() -> int:
     if f"v{version}" not in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8"):
         fail("CHANGELOG does not mention the current version")
     validate_text_and_scripts()
+    validate_specialist_skills()
+    validate_external_catalogs()
     validate_internal_inventory()
     validate_profiles()
     validate_eval_and_scores()

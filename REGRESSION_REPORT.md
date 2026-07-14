@@ -2,7 +2,7 @@
 
 ## Version
 
-`2.5.0`
+`2.7.0`
 
 ## Date
 
@@ -10,17 +10,21 @@
 
 ## Evaluated cases
 
-- 30 eval-case triplets: 10 grant direction screens, 5 customer deliveries, 5 bioinformatics plans, 5 wet-experiment plans, 3 literature readings, and 2 manuscript revisions.
+- 33 eval-case triplets: 11 grant direction screens, 6 customer deliveries, 5 bioinformatics plans, 5 wet-experiment plans, 4 literature readings, and 2 manuscript revisions.
 - 7 structured review profiles.
 - 4 positive/negative quality-scoring fixtures.
 - Manifest routes, UTF-8 text, Python syntax, CLI entry points, and GitHub workflow structure.
+- Nine bundled Nature specialist skills and all declared specialist-routing fallback paths.
+- GPTomics and Orchestra catalog snapshots, licenses, provenance, skill counts, and routing declarations.
 
 ## Passed cases
 
-- 30/30 eval scaffolds passed structural and rubric validation.
+- 33/33 eval scaffolds passed structural and rubric validation.
 - 7/7 review profiles generated and validated.
 - Delivery and grant scorers separated positive fixtures (`>=85`) from negative fixtures (`<65`).
 - Repository validation passed.
+- 9/9 specialist skill entrypoints and routing declarations passed structural validation.
+- GPTomics 562/562 and Orchestra 98/98 catalog entrypoints passed inventory validation.
 
 ## Failed cases
 
