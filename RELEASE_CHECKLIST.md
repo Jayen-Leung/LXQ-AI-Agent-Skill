@@ -21,7 +21,7 @@
 - [ ] `VERSION`、`manifest.yaml` 和 README 版本一致
 - [ ] 运行 `python tests/validate_repository.py`
 - [ ] GitHub Actions 验证通过
-- [ ] 创建版本标签，例如 `v2.5.0`
+- [ ] 创建版本标签，例如 `v2.5.1`
 - [ ] 发布说明列出新增功能、兼容性和已知限制
 
 ## 上传

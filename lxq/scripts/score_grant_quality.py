@@ -8,7 +8,13 @@ import json
 import re
 from pathlib import Path
 
-from score_delivery_quality import AI_PHRASES, find_budget_warnings, infer_budget
+from score_delivery_quality import (
+    AI_PHRASES,
+    find_budget_warnings,
+    find_unverified_fact_flags,
+    has_numbered_sample_size,
+    infer_budget,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -63,17 +69,27 @@ def main() -> int:
         "measurable_objectives": bool(objectives) and has_any(objectives, ["评估", "比较", "估计", "验证", "构建", "量化"]),
         "content_objective_alignment": bool(objectives) and bool(contents),
         "specific_innovation": len(innovation) >= 30 and has_any(innovation, ["人群", "指标", "方法", "验证", "时间点", "数据"]),
-        "sample_size_basis": "样本量" in text and has_any(text, ["依据", "计算", "效应量", "事件率", "把握度", "精度", "失访"]),
+        "sample_size_basis": has_numbered_sample_size(text) and has_any(text, ["依据", "计算", "效应量", "事件率", "把握度", "精度", "失访", "需进一步确认"]),
         "statistics_match": has_any(text, ["统计方法", "回归模型", "生存分析", "混合效应", "置信区间", "多重比较"]),
         "risk_and_alternative": bool(risk) and has_any(risk, ["替代", "备选", "缓解", "预案"]),
     }
     missing_fields = [name for name, passed in checks.items() if not passed]
     ai_style_flags = [phrase for phrase in AI_PHRASES if phrase in text]
     budget_method_warnings = find_budget_warnings(text, budget)
+    uncertainty_flags = find_unverified_fact_flags(text)
+    hard_flags = []
+    if uncertainty_flags:
+        hard_flags.append("unverified_fact_as_established")
+    if budget_method_warnings:
+        hard_flags.append("low_budget_high_cost_methods")
+    if not checks["sample_size_basis"]:
+        hard_flags.append("sample_size_basis_missing_or_unbounded")
 
     score = 100 - 9 * len(missing_fields)
     score -= min(12, 2 * len(ai_style_flags))
     score -= min(24, 12 * len(budget_method_warnings))
+    score -= min(20, 10 * len(uncertainty_flags))
+    score -= min(18, 6 * len(hard_flags))
     score = max(0, score)
 
     major_issues: list[str] = []
@@ -82,6 +98,8 @@ def main() -> int:
             major_issues.append(f"关键基金质量项未通过：{key}")
     if budget_method_warnings:
         major_issues.append("经费与技术路线可能不匹配")
+    if uncertainty_flags:
+        major_issues.append("存在需要证据核验的既定事实表述")
 
     minor_issues: list[str] = []
     for key in ("specific_significance", "clear_gap", "specific_innovation", "risk_and_alternative"):
@@ -98,12 +116,17 @@ def main() -> int:
         decision = "conditional_pass"
     else:
         decision = "fail"
+    readiness = "ready_to_use" if decision == "pass" else "conditional"
+    if hard_flags:
+        readiness = "blocked" if decision == "fail" else "needs_author_input"
 
     recommendations = [f"补强基金质量项：{name}" for name in missing_fields]
     if ai_style_flags:
         recommendations.append("删除空泛意义表述，改写为具体问题、对象、指标、方法和结局")
     if budget_method_warnings:
         recommendations.append("缩减高成本技术或补充报价、平台、样本和经费依据")
+    if uncertainty_flags:
+        recommendations.append("核验前期、伦理、样本和既定机制事实；无法核验时改为拟采用、建议或需确认")
 
     payload = {
         "score": score,
@@ -114,6 +137,9 @@ def main() -> int:
         "missing_fields": missing_fields,
         "ai_style_flags": ai_style_flags,
         "budget_method_warnings": budget_method_warnings,
+        "uncertainty_as_fact_flags": uncertainty_flags,
+        "hard_flags": hard_flags,
+        "readiness": readiness,
         "recommendations": recommendations,
         "checks": checks,
     }

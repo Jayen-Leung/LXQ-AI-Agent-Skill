@@ -1,0 +1,24 @@
+task_type: 文献精读
+invocation_intensity: strict
+required_sections:
+  - 文献身份核验
+  - 无法核验边界
+  - 替代检索建议
+must_include:
+  - POLICY_CHECK_NEEDED
+  - EVIDENCE_NEEDED
+  - 不得虚构文献内容
+must_not_include:
+  - 编造作者
+  - 编造期刊
+  - 编造结论
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

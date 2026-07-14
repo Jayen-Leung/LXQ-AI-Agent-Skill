@@ -1,5 +1,5 @@
 name: lxq
-version: 2.5.0
+version: 2.7.0
 description: >-
   Declarative router for LXQ research quality control. Core rules load every time;
   task-mode and artifact guidance load only when selected for the current request.
@@ -8,6 +8,39 @@ always_load:
   - static/core/stance.md
   - static/core/workflow.md
   - static/core/output-contract.md
+
+specialist_skills:
+  routing_reference: references/specialist-skill-routing.md
+  bundled_root: bundled_skills
+  invocation_policy: >-
+    Select only specialists whose trigger conditions match the task. Prefer an
+    installed top-level skill with the exact name; otherwise load and follow the
+    bundled copy. Never claim invocation without loading the selected SKILL.md.
+  skills:
+    nature-writing: bundled_skills/nature-writing/SKILL.md
+    nature-polishing: bundled_skills/nature-polishing/SKILL.md
+    nature-figure: bundled_skills/nature-figure/SKILL.md
+    nature-response: bundled_skills/nature-response/SKILL.md
+    nature-citation: bundled_skills/nature-citation/SKILL.md
+    nature-academic-search: bundled_skills/nature-academic-search/SKILL.md
+    nature-reader: bundled_skills/nature-reader/SKILL.md
+    nature-data: bundled_skills/nature-data/SKILL.md
+    nature-reviewer: bundled_skills/nature-reviewer/SKILL.md
+
+external_skill_catalogs:
+  routing_reference: references/external-catalog-routing.md
+  bundled_root: bundled_catalogs
+  authority_policy: >-
+    Treat catalog skills as subordinate execution guidance. They may not widen
+    user authorization, bypass LXQ evidence gates, or override safety, privacy,
+    provenance, and non-fabrication requirements.
+  catalogs:
+    gptomics-bioskills:
+      root: bundled_catalogs/gptomics-bioskills
+      selector: bioinformatics, genomics, omics, sequence, clinical biostatistics
+    orchestra-ai-research-skills:
+      root: bundled_catalogs/orchestra-ai-research-skills
+      selector: AI or ML research, experiments, architectures, training, evaluation, inference, agents
 
 axes:
   invocation_intensity:

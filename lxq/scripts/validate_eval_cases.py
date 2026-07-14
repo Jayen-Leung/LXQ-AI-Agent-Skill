@@ -19,13 +19,14 @@ SCORING_KEYS = {
     "evidence_integrity", "language_quality", "budget_fit", "risk_control",
 }
 EXPECTED_CATEGORIES = {
-    "基金售前方向筛选": 10,
-    "客户交付完整方案": 5,
+    "基金售前方向筛选": 11,
+    "客户交付完整方案": 6,
     "生信方案": 5,
     "湿实验方案": 5,
-    "文献精读": 3,
+    "文献精读": 4,
     "投稿返修": 2,
 }
+EXPECTED_CASES = sum(EXPECTED_CATEGORIES.values())
 INTENSITIES = {"light", "standard", "strict", "forensic"}
 
 
@@ -50,8 +51,8 @@ def main() -> int:
     errors: list[str] = []
     categories: Counter[str] = Counter()
     stems = sorted({path.name[:8] for path in root.glob("case_*_input.md")})
-    if len(stems) != 30:
-        errors.append(f"expected 30 case stems, found {len(stems)}")
+    if len(stems) != EXPECTED_CASES:
+        errors.append(f"expected {EXPECTED_CASES} case stems, found {len(stems)}")
 
     for stem in stems:
         paths = {

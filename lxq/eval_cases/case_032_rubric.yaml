@@ -1,0 +1,24 @@
+task_type: 客户交付完整方案
+invocation_intensity: standard
+required_sections:
+  - 事实边界
+  - 研究对象与样本量
+  - 风险与替代方案
+must_include:
+  - AUTHOR_INPUT_NEEDED
+  - EVIDENCE_NEEDED
+  - 不得写成既定事实
+must_not_include:
+  - 伦理已批准
+  - 已证实机制
+  - 已收集200例
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80

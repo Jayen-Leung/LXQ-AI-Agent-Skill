@@ -1,0 +1,23 @@
+task_type: 基金售前方向筛选
+invocation_intensity: light
+required_sections:
+  - 预算边界
+  - 不推荐方案
+  - 替代方向
+must_include:
+  - 高成本技术警告
+  - 低预算路径
+  - 需进一步确认
+must_not_include:
+  - 默认同意全套组学
+  - 承诺机制证明
+scoring:
+  innovation: 10
+  feasibility: 15
+  client_fit: 10
+  methodology: 20
+  evidence_integrity: 20
+  language_quality: 10
+  budget_fit: 10
+  risk_control: 5
+pass_threshold: 80
