@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## v2.8.0
+
+### Added
+
+- Canonical Chinese single-paper literature reading report structure based on the approved LXQ FOXN3/NEK6 report mode.
+- Dedicated Word/PDF layout profile with title hierarchy, metadata table, evidence boxes, figure placement, evidence-strength matrix, article-use boundaries, and page-flow rules.
+- On-demand routing for formal Chinese literature reading reports and established LXQ report formatting.
+
+### Changed
+
+- Literature reports now default to a structured evidence-led reading report rather than a loose abstract summary when the user requests a formal deliverable.
+- Word remains the primary editable artifact; rendered page inspection is required before delivery.
+
 ## v2.7.0
 
 ### Added
