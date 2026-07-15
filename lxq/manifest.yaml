@@ -1,5 +1,5 @@
 name: lxq
-version: 2.7.0
+version: 2.8.0
 description: >-
   Declarative router for LXQ research quality control. Core rules load every time;
   task-mode and artifact guidance load only when selected for the current request.
@@ -114,6 +114,8 @@ references:
       path: references/output_contracts/wet_experiment_plan.md
     - condition: literature report or evidence synthesis
       path: references/output_contracts/literature_report.md
+    - condition: Chinese literature reading report in Word or PDF, or established LXQ literature-report format
+      path: references/literature-report-word-style-zh.md
     - condition: strict or forensic audit report
       path: references/output_contracts/audit_report.md
     - condition: structured review bundle, schemas, or machine-readable handoff
