@@ -36,6 +36,12 @@ EXPECTED_CATALOGS = {
     "gptomics-bioskills": 562,
     "orchestra-ai-research-skills": 98,
 }
+EXPECTED_MANUSCRIPT_CONTRACTS = {
+    "structure-narrative.md",
+    "evidence-story.md",
+    "reporting-statistics.md",
+    "visual-presentation.md",
+}
 
 
 def fail(message: str) -> None:
@@ -154,6 +160,45 @@ def validate_internal_inventory() -> None:
         fail("Chinese internal inventory lacks v2.5 items: " + ", ".join(missing))
 
 
+def validate_manuscript_engine() -> None:
+    manifest = (SKILL / "manifest.yaml").read_text(encoding="utf-8")
+    skill_router = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    engine = SKILL / "references" / "sci-manuscript-engine.md"
+    contracts_dir = SKILL / "references" / "manuscript-contracts"
+    full_contract = SKILL / "references" / "output_contracts" / "full_manuscript.md"
+    regression = SKILL / "eval_cases" / "manuscript_engine_cases.md"
+
+    required_files = [engine, full_contract, regression]
+    missing_files = [str(path.relative_to(SKILL)) for path in required_files if not path.is_file()]
+    if missing_files:
+        fail("missing manuscript engine files: " + ", ".join(missing_files))
+
+    found_contracts = {path.name for path in contracts_dir.glob("*.md")}
+    if found_contracts != EXPECTED_MANUSCRIPT_CONTRACTS:
+        fail(f"unexpected manuscript contract set: {sorted(found_contracts)}")
+
+    required_manifest_tokens = [
+        "manuscript_engine:",
+        "references/sci-manuscript-engine.md",
+        "references/manuscript-contracts/structure-narrative.md",
+        "references/manuscript-contracts/evidence-story.md",
+        "references/manuscript-contracts/reporting-statistics.md",
+        "references/manuscript-contracts/visual-presentation.md",
+        "references/output_contracts/full_manuscript.md",
+    ]
+    missing_tokens = [token for token in required_manifest_tokens if token not in manifest]
+    if missing_tokens:
+        fail("manifest lacks manuscript engine routing: " + ", ".join(missing_tokens))
+
+    if "SCI Manuscript Engine" not in skill_router:
+        fail("SKILL.md lacks SCI Manuscript Engine routing section")
+
+    engine_text = engine.read_text(encoding="utf-8")
+    for token in ("Evidence Map", "Scientific Story Engine", "Figure Storyboard", "Study-type router"):
+        if token not in engine_text:
+            fail(f"SCI manuscript engine lacks required concept: {token}")
+
+
 def validate_profiles() -> None:
     scripts = SKILL / "scripts"
     scaffold = scripts / "scaffold_review.py"
@@ -190,8 +235,8 @@ def validate_eval_and_scores() -> None:
         fail(f"expected 12 examples, found {len(examples)}")
     if len(eval_files) != 99:
         fail(f"expected 99 eval files, found {len(eval_files)}")
-    if len(contracts) != 8:
-        fail(f"expected 8 output contracts, found {len(contracts)}")
+    if len(contracts) != 9:
+        fail(f"expected 9 output contracts, found {len(contracts)}")
     run(str(scripts / "validate_eval_cases.py"), str(SKILL / "eval_cases"))
 
     good_delivery = """# 拟定题目
@@ -287,6 +332,7 @@ def main() -> int:
     validate_specialist_skills()
     validate_external_catalogs()
     validate_internal_inventory()
+    validate_manuscript_engine()
     validate_profiles()
     validate_eval_and_scores()
     print(f"LXQ repository validation passed: version={version}")
