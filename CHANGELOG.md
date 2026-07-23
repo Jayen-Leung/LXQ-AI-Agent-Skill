@@ -2,6 +2,52 @@
 
 ## Unreleased
 
+## v2.9.0
+
+### Added
+
+- LXQ-native **SCI Manuscript Engine** for complete manuscript drafting, evidence-to-paper workflows, whole-paper reconstruction, and journal-ready scientific writing.
+- Study-type routing for clinical observational/interventional research, diagnostic/prognostic studies, prediction models, bulk bioinformatics, single-cell/single-nucleus omics, spatial omics, multi-omics, wet-lab mechanism studies, animal studies, translational hybrids, bioinformatics + wet-lab papers, systematic reviews/meta-analyses, and AI/ML methods papers.
+- Four manuscript contracts covering structure/narrative, evidence/scientific story, reporting/statistics, and visual presentation.
+- Evidence-first manuscript workflow: `fact base -> study type -> evidence map -> scientific story -> figure storyboard -> Results -> Methods -> Discussion -> Introduction -> Abstract -> Title -> final QC`.
+- Evidence Ladder (L0-L9) and claim-strength gate so causal/mechanistic language cannot exceed the available evidence.
+- Figure Storyboard contract requiring each main figure to answer a defined scientific question, support one main claim, declare evidence strength, and create a transition to the next question.
+- Biomedical reporting/statistics routing for CONSORT, STROBE, STARD, TRIPOD, PRISMA, ARRIVE, CARE, and SQUIRE-style requirements where applicable.
+- Explicit safeguards against pseudoreplication, data leakage, overfitting, unverified multiplicity, unsupported clinical utility claims, and treating cell counts as biological replicate counts.
+- Full-manuscript output contract with evidence map, scientific story, figure/table plan, manuscript, unresolved-evidence register, and QC/readiness output.
+- Seven manuscript-engine regression scenarios covering bioinformatics + wet-lab papers, clinical cohorts, single-cell pseudoreplication, inappropriate CVPR-template forcing, causal overclaiming, missing experimental metadata, and figure-story reconstruction.
+
+### Changed
+
+- Complete manuscript tasks now route through the SCI Manuscript Engine before downstream writing/polishing specialists.
+- `nature-writing`, `nature-polishing`, `nature-figure`, `nature-citation`, `nature-academic-search`, `nature-reader`, and `nature-reviewer` remain specialist executors; LXQ retains authority over evidence boundaries, numerical consistency, provenance, research integrity, and readiness.
+- GPTomics/bioSkills remain evidence-producing analysis executors and may not be used as a substitute for evidence that was not actually generated.
+- Manuscript structure is now selected dynamically by study type and target venue instead of inheriting a fixed CVPR/ResNet-style `Related Work -> Method -> Experiments` hierarchy.
+- Section budgets are now journal/article-type dependent rather than fixed to an 8-12 page conference-paper target.
+- The original `Claim -> Evidence -> Interpretation` pattern is extended to `Question -> Method -> Observation -> Quantitative/Statistical Evidence -> Interpretation Boundary -> Next Question` for biomedical Results writing.
+- Introduction logic now uses a biomedical funnel: known problem -> current understanding -> unresolved gap/contradiction -> why it matters -> limitations of existing evidence -> study rationale/objective.
+- Discussion is promoted to a first-class contract with principal findings, literature comparison, mechanistic/alternative interpretation, implications, strengths, limitations, and bounded perspective.
+- Visual formatting now follows the actual journal/template first; the user-supplied `sci-paper-cn`/ResNet-CVPR typography is treated only as a design reference, not a universal submission format.
+
+### Integrity and compatibility
+
+- Preserved `light`, `standard`, `strict`, and `forensic` invocation intensities.
+- Preserved `audit`, `repair`, `execute`, and `explain` task modes.
+- Preserved LXQ non-fabrication boundaries and explicit placeholders such as `[AUTHOR_INPUT_NEEDED]`, `[EVIDENCE_NEEDED]`, and `[EXPERT_CONFIRMATION_NEEDED]`.
+- The user-supplied `sci-paper-cn` structure/narrative/visual contracts were adapted conceptually into LXQ rather than copied as a computer-science conference template.
+
+### Invocation examples
+
+```text
+LXQ strict：把这个项目做成一篇可投稿 SCI。
+```
+
+For a full evidence-to-paper workflow:
+
+```text
+调用 LXQ strict 模式处理本项目。先建立 Evidence Map、Evidence Strength Grading、Scientific Question Chain 和 Figure Storyboard，再按 Results -> Methods -> Discussion -> Introduction -> Abstract -> Title 的内部顺序构建全文，最后进行 citation/statistics/figure-text consistency/Nature reviewer/LXQ final QC。禁止虚构任何数据、统计量、文献、伦理号、基金号、软件版本、试剂货号或未完成实验。
+```
+
 ## v2.8.0
 
 ### Added

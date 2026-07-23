@@ -1,25 +1,28 @@
 # LXQ Research Quality Control Skill
 
-LXQ 是面向医学、临床与生物信息学研究的 Codex Skill，提供证据关联的审核、修复、执行和交付流程。当前发布版本为 `2.8.0`。
+LXQ 是面向医学、临床、生物信息学与科研论文生产的 Codex Skill，提供证据关联的审核、修复、执行、科研叙事重构和交付流程。当前发布版本为 `2.9.0`。
 
 ## 主要能力
 
 - 医学、生物信息学和多组学数据质量控制
 - Bulk RNA-seq、单细胞、空间组学、WES/WGS、蛋白质组、代谢组和微生物组审核
 - 临床/观察性研究设计与统计检查
+- **SCI Manuscript Engine**：从 Evidence Map、Scientific Story、Figure Storyboard 到完整 manuscript 的证据驱动论文生产
+- 按研究类型自动路由临床队列、RCT、诊断/预后、预测模型、生信、单细胞、空间、多组学、湿实验、动物、转化医学及混合型论文结构
+- Evidence Ladder（L0-L9）与 claim-strength gate，限制因果/机制表述不超过现有证据强度
 - 论文、数字一致性、科学图表和证据图像审核
 - 审稿回复、投稿包、数据与代码可用性
 - 基金课题、研究目标、技术路线、风险和预算审核
 - 中文/英文医学科研客户交付方案
 - 文献检索、合法全文获取、精读和证据综合
 - 中文单篇文献阅读报告：固定内容结构、原文图表就近排布、证据强度矩阵、适用边界和 Word/PDF 交付版式
-- 结构化问题清单、证据矩阵、术语台账和复现清单
+- 结构化问题清单、证据矩阵、术语台账、Figure Storyboard 和复现清单
 - `light`、`standard`、`strict`、`forensic` 四级调用强度
 - 中文客户交付去AI味过滤、14段硬结构和预算—技术匹配
-- 12个正反示例、33个eval三件套和任务输出契约
+- 12个正反示例、33个核心 eval 三件套、7个 manuscript-engine 回归场景和任务输出契约
 - 中文客户交付与基金方案启发式质量评分
 
-完整中文功能说明见 [LXQ v2.5 全功能中文内部审核说明](lxq/references/lxq-functions-v2.5-zh.md)。
+完整中文功能说明见 [LXQ v2.5 全功能中文内部审核说明](lxq/references/lxq-functions-v2.5-zh.md)。SCI 论文生产总控见 [SCI Manuscript Engine](lxq/references/sci-manuscript-engine.md)。
 
 ## 仓库结构
 
@@ -42,6 +45,8 @@ lxq-skill/
     ├── agents/
     ├── static/
     ├── references/
+    │   ├── sci-manuscript-engine.md
+    │   └── manuscript-contracts/
     ├── bundled_skills/             # 九个可独立回退加载的 Nature 专项 skill 源码
     ├── bundled_catalogs/           # GPTomics 与 Orchestra AI Research 技能目录
     └── scripts/
@@ -78,6 +83,34 @@ cp -R ./lxq "$HOME/.codex/skills/lxq"
 调用 LXQ，按固定文献阅读报告格式总结这篇全文，保留关键结果图，并交付 Word 和 PDF。
 
 调用 LXQ，检查论文、图表、补充材料和审稿回复中的样本量及结论是否一致。
+
+LXQ strict：把这个项目做成一篇可投稿 SCI。
+```
+
+完整 SCI 论文任务会优先执行：
+
+```text
+Fact Base
+→ Study-Type Classification
+→ Evidence Map
+→ Evidence Strength Grading
+→ Scientific Question Chain
+→ Figure Storyboard
+→ Results
+→ Methods
+→ Discussion
+→ Introduction
+→ Abstract
+→ Title
+→ Citation / Statistics / Figure-Text Consistency
+→ Nature Reviewer / Polishing
+→ LXQ Final QC
+```
+
+推荐调用：
+
+```text
+调用 LXQ strict 模式处理本项目。先建立 Evidence Map、Evidence Strength Grading、Scientific Question Chain 和 Figure Storyboard，再按 Results -> Methods -> Discussion -> Introduction -> Abstract -> Title 的内部顺序构建全文。禁止虚构任何数据、统计量、文献、伦理号、基金号、软件版本、试剂货号或未完成实验。
 ```
 
 ## 本地验证
@@ -93,13 +126,14 @@ python tests/validate_repository.py
 - Skill 基本结构和前置元数据
 - 路由引用路径存在性
 - 十一个 Python 脚本语法和命令入口
+- SCI Manuscript Engine、四类 manuscript contracts、完整论文输出契约及路由完整性
 - 2026 NSFC 正式申报书 DOCX 模板、五页格式契约和结构验证入口
 - 中文文献阅读报告内容契约及 Word 版式路由
 - UTF-8 文件完整性
 - `core`、`grant`、`literature` 和 `complete` 工作包生成与结构验证
 - 中文基金客户交付模板和空文献清单验证
 - 中文内部审核文件与 Skill 文件清单一致性
-- 33个eval三件套、类别配额、rubric字段和评分权重
+- 33个核心 eval 三件套、7个 manuscript-engine 回归场景、类别配额、rubric字段和评分权重
 - 客户交付/基金质量评分器的正负向区分能力
 
 GitHub Actions 会在推送和 Pull Request 时自动执行同一测试。
@@ -111,6 +145,7 @@ GitHub Actions 会在推送和 Pull Request 时自动执行同一测试。
 - 不得虚构数据、引用、伦理批准、数据库编号、前期结果或已经执行的分析。
 - 文献全文仅能通过合法、授权的方式获取。
 - 结构验证通过不等于科学有效性通过。
+- SCI Manuscript Engine 不会把数据库相关性、单一队列结果或探索性分析自动升级为因果机制或临床有效性结论。
 
 详见 [SECURITY.md](SECURITY.md)。
 
@@ -121,7 +156,7 @@ GitHub Actions 会在推送和 Pull Request 时自动执行同一测试。
 ```bash
 git init
 git add .
-git commit -m "Release LXQ 2.8.0"
+git commit -m "Release LXQ 2.9.0"
 git branch -M main
 git remote add origin https://github.com/<你的账号>/<仓库名>.git
 git push -u origin main
@@ -137,4 +172,4 @@ git push -u origin main
 
 ## 免责声明
 
-本项目用于科研质量控制、可重复性和交付支持，不提供临床诊断、治疗建议或监管认证，也不保证基金中标、论文接收或研究结论成立。
+本项目用于科研质量控制、可重复性、论文生产和交付支持，不提供临床诊断、治疗建议或监管认证，也不保证基金中标、论文接收或研究结论成立。
