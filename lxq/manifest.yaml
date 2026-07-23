@@ -1,5 +1,5 @@
 name: lxq
-version: 2.8.0
+version: 2.9.0
 description: >-
   Declarative router for LXQ research quality control. Core rules load every time;
   task-mode and artifact guidance load only when selected for the current request.
