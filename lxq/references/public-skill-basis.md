@@ -1,6 +1,6 @@
 # Public Skill Design Basis
 
-This file records the public skill sources consulted for LXQ's reusable design patterns. It is not a substitute for primary scientific guidelines or current tool documentation.
+This file records the public and user-supplied skill sources consulted for LXQ's reusable design patterns. It is not a substitute for primary scientific guidelines or current tool documentation.
 
 ## Sources
 
@@ -11,11 +11,13 @@ This file records the public skill sources consulted for LXQ's reusable design p
 - Anthropic `doc-coauthoring` skill: `https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring` (repository license applies). Design patterns used conceptually: context gathering, section-by-section surgical refinement, and fresh-reader testing.
 - Community `grant-writer` skill from `majiayu000/claude-skill-registry` (MIT, inspected 2026-07-08). Design patterns used conceptually: sponsor alignment, measurable objectives, evaluation plan, capacity, sustainability, and budget-to-activity mapping.
 - User-supplied `Medical Research Delivery Skill` specification (received 2026-07-08). Requirements incorporated: client-facing topic selection, fixed proposal structure, wet-lab and bioinformatics detail, sample size and endpoint completeness, budget/background fit, uncertainty labelling, and a direct-readability completion gate.
+- User-supplied Kimi `sci-paper-cn` specification and its Structure & Narrative, Visual Style & Typography, and Figures/Tables/Equations contracts (received 2026-07-23). Patterns adapted: contract-based manuscript planning, funnel narrative, paragraph jobs, forward references, figure/table completeness, self-contained captions, and submission-aware presentation. CVPR/ResNet-specific fixed section hierarchy, fixed page budgets, universal double-column typography, mandatory Related Work, and computer-science table conventions were not adopted as biomedical defaults.
 
 ## Adaptation policy
 
 - Use public skills to identify workflow patterns and failure modes; verify consequential scientific claims against primary literature, official tool documentation, protocols, or domain standards when acting on real data.
 - Do not treat a repository's popularity, benchmark claim, or polished output as evidence of scientific correctness.
 - Record versions or retrieval dates when a task depends on evolving software behavior.
-- Avoid copying large passages or code examples. Keep LXQ focused on cross-artifact audit, repair, integrity, and evidence linkage rather than duplicating assay-specific tool manuals.
+- Avoid copying large passages or code examples. Keep LXQ focused on cross-artifact audit, repair, integrity, evidence linkage, and manuscript architecture rather than duplicating assay-specific tool manuals.
 - Keep all LXQ `always_load` paths inside the LXQ directory so the skill remains portable and does not depend on sibling `_shared` folders.
+- When adapting a domain-specific writing skill to biomedical work, preserve reusable workflow logic but replace venue-specific assumptions with study-type, evidence-strength, reporting-guideline, and target-journal routing.
