@@ -94,6 +94,8 @@ Read `references/specialist-skill-routing.md` whenever the task includes manuscr
 
 Read `references/external-catalog-routing.md` for bioinformatics/omics execution or AI/ML research engineering. Search the matching bundled catalog, then load only the selected leaf `SKILL.md` files and their directly required resources.
 
+For biomedical image analysis involving microscopy, histopathology, MRI/CT, segmentation, object detection, tracking, or image-derived quantification, read [biomedical-image-analysis-zh.md](references/biomedical-image-analysis-zh.md). Use the matching analysis or figure track for the requested work.
+
 ### 7. Run the core workflow
 
 Follow `static/core/workflow.md` end to end. Use the loaded mode fragments to control what may change and the loaded artifact references to determine domain checks.
