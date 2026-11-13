@@ -197,7 +197,7 @@ git push -u origin main
 
 本项目用于科研质量控制、可重复性、论文生产和交付支持，不提供临床诊断、治疗建议或监管认证，也不保证基金中标、论文接收或研究结论成立。
 
-## English
+## English Version
 
 LXQ is a Codex skill for biomedical, clinical, and bioinformatics research. It supports evidence-linked auditing, targeted corrections, reproducible analysis, manuscript development, and research deliverables. The current version is [`2.9.0`](VERSION).
 
