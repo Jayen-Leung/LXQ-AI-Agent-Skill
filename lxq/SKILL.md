@@ -70,7 +70,7 @@ Read the fragment/reference mapped to every selected value. Do not load unrelate
 
 Load exactly one primary task output contract from `references/output_contracts/` when a matching contract exists. Invocation intensity determines depth: a light direction request must not inherit the strict audit-report shape.
 
-#### Full-manuscript and evidence-to-paper routing
+#### SCI Manuscript Engine routing
 
 When the request is to draft a complete paper, rebuild a paper from data/results/figures, convert bioinformatics or wet-lab outputs into a manuscript, repair whole-paper scientific logic, or prepare a journal-ready manuscript:
 
@@ -93,6 +93,8 @@ The final document order still follows the target journal.
 Read `references/specialist-skill-routing.md` whenever the task includes manuscript drafting or polishing, figures, reviewer responses, citations or literature search, full-paper reading, data availability, or reviewer-perspective assessment. Select only the specialist skills whose trigger rules match the requested work.
 
 Read `references/external-catalog-routing.md` for bioinformatics/omics execution or AI/ML research engineering. Search the matching bundled catalog, then load only the selected leaf `SKILL.md` files and their directly required resources.
+
+For biomedical image analysis involving microscopy, histopathology, MRI/CT, segmentation, object detection, tracking, or image-derived quantification, read [biomedical-image-analysis-zh.md](references/biomedical-image-analysis-zh.md). Use the matching analysis or figure track for the requested work.
 
 ### 7. Run the core workflow
 
