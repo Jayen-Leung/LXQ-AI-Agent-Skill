@@ -39,7 +39,7 @@ Also load only the actual component tracks involved: analysis, figure, literatur
 
 Use this order for complete manuscript work:
 
-`fact base -> study-type routing -> evidence map -> scientific story -> figure storyboard -> Results -> Methods -> Discussion -> Introduction -> Abstract -> Title -> references/declarations -> cross-artifact QC -> specialist polish -> final validation`
+`fact base -> study-type routing -> Evidence Map -> scientific story -> Figure Storyboard -> Results -> Methods -> Discussion -> Introduction -> Abstract -> Title -> references/declarations -> cross-artifact QC -> specialist polish -> final validation`
 
 This is the default production order, not necessarily the final document order.
 
