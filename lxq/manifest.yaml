@@ -132,6 +132,8 @@ references:
       path: references/output_contracts/manuscript_revision.md
     - condition: bioinformatics workflow or SOP
       path: references/output_contracts/bioinformatics_sop.md
+    - condition: biomedical image analysis, microscopy, histopathology, MRI/CT, segmentation, detection, tracking, or image-derived quantification
+      path: references/biomedical-image-analysis-zh.md
     - condition: wet experiment plan
       path: references/output_contracts/wet_experiment_plan.md
     - condition: literature report or evidence synthesis
